@@ -1,0 +1,83 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3 ><font>{{ message }}</font></h3>
+<script type="javascript/text">
+    $('th[data-toggle="tooltip"]').tooltip(); 
+</script>
+<div class=" table-responsive container">
+	<p>{{ title }} books </p>
+</div>
+
+ <div id="res">
+     {% if user.is_authenticated %}  
+     <div>
+           <form action="/inv" method="post">
+                   {% csrf_token %}
+               <h3>Select required mode of operation on inventory</h3>
+         <table class="table">  
+         
+             
+                          <tr><select class="form-control" name="inventoryMode">
+                              {% for a in invmodes %}
+                             <option value={{a}}>{{a}}</option>
+                              {% endfor %}
+                           </select></tr>
+              
+                <tr><button name="modea" class="btn btn-outline-success  my-2 my-sm-0" type="submit" > Apply </button></tr>
+                  
+            
+           </table>
+            
+           </table>
+          </form>
+         
+         <form action="/addInventory" method="post">
+                           {% csrf_token %}
+
+   
+                <table class="table">
+   
+                <tr>
+                     <th scope="col">Sl.No</th>
+                    <th scope="col" data-toggle="tooltip" title=" details related to book seperated by '-' Ex : <name> - <edition> - <published year> - <publisher>">Book Name</th>
+                    <th scope="col" data-toggle="tooltip" title=" Short Description of book">Book Description</th>
+                    <th scope="col">Author Name</th>
+                    <th scope="col" data-toggle="tooltip" title=" Available books quantity">Qty</th>
+                    <th scope="col"  data-toggle="tooltip" title=" in this format (Row - Rack)">Book location</th>
+                     <th scope="col"  data-toggle="tooltip" title=" Select Department">Department</th>
+                     </tr>
+                             {% for i in le %}
+             
+                             <tr>
+                                <td><p>{{i}}</p></td>
+                               <td>
+                       
+                                <input type="text" class="form-input" name="bookName" >
+                           
+                             </td>
+                                 <td> <input type="text" class="form-input" name="bookdesc" ></td>
+                                 <td>  <input type="text" class="form-input" name="AuthorName" ></td>
+                                 <td>  <input type="text" class="form-input" name="Quantity" ></td>
+                                 <td>  <input type="text" class="form-input" name="RowRack" ></td>
+                                 <td>  <select id="dptS" name="depart_select">
+                                  <option  value="NA" selected="selected">---SELECT---</option>
+                                  {% for org in DepartmentList %}
+                                   <option value="{{org}}"> 
+                                           {{org}}
+                                       </option>
+                                    {% endfor %}
+                                </select>           </td>
+                             </tr>
+                           {% endfor %}
+          
+     
+                    </table>
+                         <button type="submit">Save details</button>
+                         </form>
+     </div>
+     {% endif %}
+  </div>
+{% endblock %}

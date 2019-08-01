@@ -1,0 +1,109 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+<script type="javascript/text">
+    $('th[data-toggle="tooltip"]').tooltip(); 
+</script>
+<div class=" table-responsive container">
+	<p>{{ title }} of books </p>
+</div>
+<div class=" table-responsive container">
+	<p>Search for Available books by Department and levels.</p>
+</div>
+
+ <div id="res" class="p1">
+     {% if user.is_authenticated %}   
+       <form class="form-inline justify-content-center" method = "GET" action = "/searchdel" >
+        <input class="form-control mr-sm-2" name="query"  type="text" placeholder="Book Title">
+        <button class="btn btn-outline-success  my-2 my-sm-0" type="submit">Find Books</button>
+           {% if clearfilter == "True" %}
+                 <button class="btn btn-outline mb1 red" type="submit">Clear Filter</button>
+            {% endif %}
+
+            </form>
+ <div id="res">
+     
+     <div>
+           <form action="/inv" method="post">
+                   {% csrf_token %}
+           <h3>Select required mode of operation on inventory</h3>
+          <table class="table">  
+         
+             
+                          <tr><select class="form-control" name="inventoryMode">
+                              {% for a in invmodes %}
+                             <option value={{a}}>{{a}}</option>
+                              {% endfor %}
+                           </select></tr>
+              
+                <tr><button name="modea" class="btn btn-outline-success  my-2 my-sm-0" type="submit" > Apply </button></tr>
+                  
+            
+           </table>
+          </form>
+              
+       
+         <div class="jumbotron">
+        
+         <form action="/DelinList" method="post">
+                           {% csrf_token %}
+    <table class="table">
+      
+    <tr>
+        <th scope="col">Book Name</th>
+        <th scope="col" data-toggle="tooltip" title=" Short Description of book">Book Description</th>
+        <th scope="col">Author Name</th>
+        <th scope="col" data-toggle="tooltip" title=" Available books quantity">Qty</th>
+        <th scope="col"  data-toggle="tooltip" title=" in this format (Row - Rack)">Book location</th>
+         <th scope="col"  data-toggle="tooltip" title=" Delete listing">select Listing</th>
+         <th scope="col"  data-toggle="tooltip" title="Edit">Edit</th>
+         </tr>
+            {% if books|length > 0 %}
+             {% for b in books %}
+                 <tr>
+                     <td scope="row" name="mbookname" value="{{b.title}}"> {{b.title}}</td>
+                     <td name="mbookdesc" value="{{b.desc}}"> {{b.desc}}</td>
+                     <td name="mbookauthrName" value="{{b.a_id.name}}"> {{b.a_id.name}}</td>
+                     <td name="mbookqty" value="{{b.invt.qty}}"> {{b.invt.qty}}</td>
+                     <td name="mbookloc" value="{{b.invt.row}} -  {{b.invt.rack}}"> {{b.invt.row}} -  {{b.invt.rack}}</td>
+                      <td><div class="form-check">
+                       
+                    <input type="checkbox" class="form-check-input" name="delBook" value="{{b.pk}}">
+                  
+                           
+                  </div>
+                     
+                     </td>
+                     <td>
+                     <div class="form-check">
+                       
+                    <button type="submit" class="btn btn-primary" id="editvalues" name="editS" value="{{b.pk}}">Edit</button>
+                  
+                           
+                  </div></td>
+                 </tr>
+              {% endfor %}
+             {% else %}
+                  <tr>
+                   
+                     <td scope="row"> <p> No Matching books in database</p></td>
+                    
+                 </tr>
+           {% endif %}
+     
+        </table>
+         {% if books|length > 0 %}
+         <button type="submit" class="btn btn-primary" id="DeleteinList" >Delete Selected List</button>
+              
+             {% endif %}
+             </form>
+          
+         </div>
+      
+     </div>
+     {% endif %}
+  </div>
+{% endblock %}

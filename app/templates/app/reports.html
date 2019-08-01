@@ -1,0 +1,124 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+
+<script type="javascript/text">
+    $('th[data-toggle="tooltip"]').tooltip(); 
+</script>
+<div class=" table-responsive container">
+	
+</div>
+
+ <div id="res" class="p1">
+     {% if user.is_authenticated %}  
+ 
+     <div class="jumbotron">
+    <table class="table">
+      <caption>Report 1 - Total books in database</caption>
+    <tr>
+        <th scope="col">deparment</th>
+        <th scope="col">Total books</th>
+         </tr>
+            
+             {% for b,h in perdptbks %}
+                 <tr>
+                   <td>
+                       
+                    <p>{{b}}</p>
+                           
+                  </td>
+                     
+                     <td> {{h}}</td>
+                     
+                 </tr>
+              {% endfor %}
+        </table>
+          </div>
+     <div class="jumbotron">
+         <table class="table">
+         <caption>Report 2 - Per student borrowed</caption>
+            <tr>
+        <th scope="col">Student</th>
+        <th scope="col">books borrowed</th>
+         </tr>
+
+           {% for f,g in peruserbks %}
+                 <tr>
+                   <td>
+                       
+                    <p>{{f}}</p>
+                           
+                  </td>
+                     
+                     <td> {{g}}</td>
+                     
+                 </tr>
+              {% endfor %}
+     
+        </table>
+        
+        
+          
+         </div>
+
+      <div class="jumbotron">
+         <table class="table">
+         <caption>Report 3 - Per librarian book orders</caption>
+            <tr>
+        <th scope="col" align="center">Librarian</th>
+        <th scope="col" align="justify">book name</th>
+        <th scope="col" align="right">book qty</th>
+        <th scope="col" align="center">Dept name</th>
+        <th scope="col" align="center">Order status</th>
+         </tr>
+
+           {% for f,g in perlibrarian %}
+                 <tr>
+                   <td>
+                       
+                    <p>{{f}}</p>
+                           
+                  </td>
+                    
+                     {% for h in g %}
+                      
+                                {% for a in h %}
+                                <td align="justify">
+                                    {% if 'in-progress' in a %}
+                                    {{a}}
+                                      </td>
+                                     </tr>
+             <tr>
+                                     <td>
+                                         
+                                         </td>
+                                    {% else %}
+                                     {{a}}
+                                    
+                                    
+                                </td>
+             {% endif %}
+                                {% endfor %}
+                               
+
+                    
+                     
+                     {% endfor %}
+                     
+                 </tr>
+              {% endfor %}
+     
+        </table>
+        
+        
+          
+         </div>
+     {% endif %}
+  
+        </div>
+    
+
+
+{% endblock %}

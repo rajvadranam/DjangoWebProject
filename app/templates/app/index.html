@@ -1,0 +1,36 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>LSM</h1>
+    <p class="lead">This App serves the purpose of tracking books in library.</p>
+    <p><a href="http://cs.okstate.edu/~nvadran/#openLink" class="btn btn-primary btn-large">Go To HomeFolder &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        
+        {% if user.is_authenticated %}
+            <p><a class="btn btn-default" href="/about">Browse books here !! &raquo;</a></p>
+         {% else %}
+              <p>
+            If you are not a member of the library.
+            </p>
+            <p><a class="btn btn-default" href="/register">Register here !! &raquo;</a></p>
+        {% endif %}
+    </div>
+    <!--<div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>The Python Package Index is a repository of software for the Python programming language.</p>
+        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Microsoft Azure</h2>
+        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
+        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
+    </div>-->
+</div>
+
+{% endblock %}

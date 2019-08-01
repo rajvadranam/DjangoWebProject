@@ -1,0 +1,61 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<div class="jumbotron">
+{% for k in userdetails %}
+{% if '@' in k %}
+
+<address>
+    <strong>Mail:</strong>   <a href="mailto:Support@example.com">{{k}}</a><br />
+</address>
+{% else %}
+<address>
+    {{k}}
+</address>
+{% endif %}
+{% endfor %}
+    </div>
+<h3> your borrowed books</h3>
+<div class="jumbotron">
+    <form action="/returned" method="post">
+        
+        {% csrf_token %}
+ <table class="table">
+   
+    <tr>
+        
+        <th scope="col" data-toggle="tooltip" title=" details related to book seperated by '-' Ex : <name> - <edition> - <published year> - <publisher>">Book Name</th>
+        <th scope="col" data-toggle="tooltip" title=" Short Description of book">Book Description</th>
+        <th scope="col">Author Name</th>
+        <th scope="col"  data-toggle="tooltip" title=" issue Date">issued on</th>
+         <th scope="col"  data-toggle="tooltip" title=" Due date">due On</th>
+        <th scope="col"  data-toggle="tooltip" title=" Delete from my list">Delete FromMylist</th>
+         </tr>
+                 {% for i in borrowedbooks %}
+             
+                 <tr>
+                   
+                   <td>
+                       
+                  <p>{{i.b_id.title}}</p>
+                           
+                 </td>
+                     <td> <p>{{i.b_id.desc}}</p></td>
+                     <td> <p>{{i.b_id.a_id.name}}</p></td>
+                     
+                     <td><p>{{i.issue}}</p></td>
+                     <td>  <p>{{i.due}}</p> </td>
+                      <td>  <button type="submit" class="form-button" name="deletefrommylist" value="{{i.b_id.b_id}}"> Delete </button> </td>
+                 </tr>
+               {% endfor %}
+          
+     
+        </table>
+        
+    </form>
+</div>
+
+
+{% endblock %}
